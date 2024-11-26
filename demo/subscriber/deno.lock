@@ -1,0 +1,79 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@std/cli@*": "1.0.7",
+    "npm:@noble/hashes@*": "1.5.0",
+    "npm:nostr-tools@*": "2.10.4"
+  },
+  "jsr": {
+    "@std/cli@1.0.7": {
+      "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
+    }
+  },
+  "npm": {
+    "@noble/ciphers@0.5.3": {
+      "integrity": "sha512-B0+6IIHiqEs3BPMT0hcRmHvEj2QHOLu+uwt+tqDDeVd0oyVzh7BPrDcPjRnV1PV/5LaknXJJQvOuRGR0zQJz+w=="
+    },
+    "@noble/curves@1.1.0": {
+      "integrity": "sha512-091oBExgENk/kGj3AZmtBDMpxQPDtxQABR2B9lb1JbVTs6ytdzZNwvhxQ4MWasRNEzlbEH8jCWFCwhF/Obj5AA==",
+      "dependencies": [
+        "@noble/hashes@1.3.1"
+      ]
+    },
+    "@noble/curves@1.2.0": {
+      "integrity": "sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==",
+      "dependencies": [
+        "@noble/hashes@1.3.2"
+      ]
+    },
+    "@noble/hashes@1.3.1": {
+      "integrity": "sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA=="
+    },
+    "@noble/hashes@1.3.2": {
+      "integrity": "sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ=="
+    },
+    "@noble/hashes@1.5.0": {
+      "integrity": "sha512-1j6kQFb7QRru7eKN3ZDvRcP13rugwdxZqCjbiAVZfIJwgj2A65UmT4TgARXGlXgnRkORLTDTrO19ZErt7+QXgA=="
+    },
+    "@scure/base@1.1.1": {
+      "integrity": "sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA=="
+    },
+    "@scure/bip32@1.3.1": {
+      "integrity": "sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==",
+      "dependencies": [
+        "@noble/curves@1.1.0",
+        "@noble/hashes@1.3.2",
+        "@scure/base"
+      ]
+    },
+    "@scure/bip39@1.2.1": {
+      "integrity": "sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==",
+      "dependencies": [
+        "@noble/hashes@1.3.2",
+        "@scure/base"
+      ]
+    },
+    "nostr-tools@2.10.4": {
+      "integrity": "sha512-biU7sk+jxHgVASfobg2T5ttxOGGSt69wEVBC51sHHOEaKAAdzHBLV/I2l9Rf61UzClhliZwNouYhqIso4a3HYg==",
+      "dependencies": [
+        "@noble/ciphers",
+        "@noble/curves@1.2.0",
+        "@noble/hashes@1.3.1",
+        "@scure/base",
+        "@scure/bip32",
+        "@scure/bip39",
+        "nostr-wasm"
+      ]
+    },
+    "nostr-wasm@0.1.0": {
+      "integrity": "sha512-78BTryCLcLYv96ONU8Ws3Q1JzjlAt+43pWQhIl86xZmWeegYCNLPml7yQ+gG3vR6V5h4XGj+TxO+SS5dsThQIA=="
+    }
+  },
+  "redirects": {
+    "https://deno.land/x/sleep/mod.ts": "https://deno.land/x/sleep@v1.3.0/mod.ts"
+  },
+  "remote": {
+    "https://deno.land/x/sleep@v1.3.0/mod.ts": "e9955ecd3228a000e29d46726cd6ab14b65cf83904e9b365f3a8d64ec61c1af3",
+    "https://deno.land/x/sleep@v1.3.0/sleep.ts": "b6abaca093b094b0c2bba94f287b19a60946a8d15764d168f83fcf555f5bb59e"
+  }
+}
