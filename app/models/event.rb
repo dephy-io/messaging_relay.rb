@@ -18,7 +18,7 @@ class Event < ApplicationRecord
               scope: :pubkey
             },
             comparison: {
-              greater_than: ->(current) {
+              greater_than_or_equal_to: ->(current) {
                 current.latest&.created_at || 0
               }
             }

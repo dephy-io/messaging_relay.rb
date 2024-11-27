@@ -5,7 +5,7 @@ module Api::Topics
     def index
       @pagy, @records = pagy_uuid_cursor(
         Event.of_topic(@topic),
-        after: params[:after], primary_key: :eid, order: { created_at: :asc }
+        after: params[:after], primary_key: :eid, order: { id: :asc }
       )
 
       render json: {
@@ -18,7 +18,7 @@ module Api::Topics
     end
 
     def latest
-      @event = Event.of_topic(@topic).order(created_at: :desc).first
+      @event = Event.of_topic(@topic).order(id: :desc).first
 
       render json: {
         status: "ok",

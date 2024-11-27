@@ -5,7 +5,7 @@ module Api::Recipients
     def index
       @pagy, @records = pagy_uuid_cursor(
         Event.of_recipient(@recipient),
-        after: params[:after], primary_key: :eid, order: { created_at: :asc }
+        after: params[:after], primary_key: :eid, order: { id: :asc }
       )
 
       render json: {
@@ -18,7 +18,7 @@ module Api::Recipients
     end
 
     def latest
-      @event = Event.of_recipient(@recipient).order(created_at: :desc).first
+      @event = Event.of_recipient(@recipient).order(id: :desc).first
 
       render json: {
         status: "ok",
