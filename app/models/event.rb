@@ -8,18 +8,17 @@ class Event < ApplicationRecord
   scope :of_topic, ->(topic) { where(topic:) }
   scope :of_recipient, ->(recipient) { where(recipient:) }
 
+  belongs_to :conversation, foreign_key: %i[pubkey session], required: true, autosave: true
   has_one :merkle_node, dependent: :restrict_with_exception
 
   after_create :add_to_merkle_tree
 
   # A publisher must not send events in the same time which makes harder to sort them.
   validates :created_at,
-            uniqueness: {
-              scope: :pubkey
-            },
+            presence: true,
             comparison: {
               greater_than_or_equal_to: ->(current) {
-                current.latest&.created_at || 0
+                current.conversation&.latest_event_created_at || 0
               }
             }
 
@@ -37,14 +36,20 @@ class Event < ApplicationRecord
             format: { with: /\A\h+\z/ },
             allow_nil: true
 
-  before_validation do
+  before_validation on: :create do
     self.session = tags.find { |tag| tag[0] == "s" }&.[](1)
     self.topic = tags.find { |tag| tag[0] == "t" }&.[](1)
     self.recipient = tags.find { |tag| tag[0] == "p" }&.[](1)
+
+    self.conversation ||= Conversation.find_or_create_by(pubkey: pubkey, session: session) do |c|
+      c.latest_event_created_at = created_at
+      c.events_count = 0
+    end
   end
 
-  def readonly?
-    persisted?
+  after_validation on: :create do
+    self.conversation.latest_event_created_at = created_at
+    self.conversation.events_count += 1
   end
 
   def merkle_tree_hash
@@ -63,19 +68,8 @@ class Event < ApplicationRecord
     merkle_node&.inclusion_proof
   end
 
-  def latest
-    @latest ||=
-      Event
-        .of_topic(topic)
-        .of_pubkey(pubkey)
-        .of_session(session)
-        .order(id: :desc)
-        .first
-  end
-
-  def reload(options = nil)
-    @latest = nil
-    super
+  def readonly?
+    persisted?
   end
 
   class << self

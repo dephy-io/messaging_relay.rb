@@ -44,6 +44,14 @@ module Api
           }
         }, status: :unprocessable_content
       end
+    rescue ActiveRecord::StaleObjectError
+      render json: {
+        status: "error",
+        error: {
+          message: "Event not saved",
+          data: "Too fast requests."
+        }
+      }, status: :unprocessable_content
     end
 
     def batch_create
@@ -60,6 +68,8 @@ module Api
           errored = event_params
           break
         end
+      rescue ActiveRecord::StaleObjectError
+        errored = event_params
       end
 
       render json: {

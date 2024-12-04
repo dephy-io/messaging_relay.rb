@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class AddExtendedFieldsToEvents < ActiveRecord::Migration[8.0]
+class AddExtendedFieldsToEvents < ActiveRecord::Migration[8.1]
   def change
-    change_table :events, id: :string do |t|
+    change_table :events do |t|
       t.string :session, null: false
 
       t.string :topic, null: true, index: true

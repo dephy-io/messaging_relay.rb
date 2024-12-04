@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEvents < ActiveRecord::Migration[8.0]
+class CreateEvents < ActiveRecord::Migration[8.1]
   def change
     create_table :events do |t|
       t.string :eid, null: false, index: { unique: true }
@@ -10,9 +10,7 @@ class CreateEvents < ActiveRecord::Migration[8.0]
       t.string :content, null: false
       t.string :sig, null: false
 
-      t.datetime :created_at, null: false
-
-      t.index %i[pubkey created_at], unique: true
+      t.datetime :created_at, null: false, index: true
     end
   end
 end

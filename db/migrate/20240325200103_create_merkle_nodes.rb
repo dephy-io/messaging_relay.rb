@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateMerkleNodes < ActiveRecord::Migration[8.0]
+class CreateMerkleNodes < ActiveRecord::Migration[8.1]
   def change
     # 创建顺序：parent to children
     create_table :merkle_nodes do |t|
