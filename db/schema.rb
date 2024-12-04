@@ -14,6 +14,16 @@ ActiveRecord::Schema[8.1].define(version: 2024_03_25_200103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "conversations", primary_key: ["pubkey", "session"], force: :cascade do |t|
+    t.string "pubkey", null: false
+    t.string "session", null: false
+    t.integer "lock_version"
+    t.datetime "latest_event_created_at"
+    t.integer "events_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "eid", null: false
     t.string "pubkey", null: false
@@ -25,8 +35,8 @@ ActiveRecord::Schema[8.1].define(version: 2024_03_25_200103) do
     t.string "session", null: false
     t.string "topic"
     t.string "recipient"
+    t.index ["created_at"], name: "index_events_on_created_at"
     t.index ["eid"], name: "index_events_on_eid", unique: true
-    t.index ["pubkey", "created_at"], name: "index_events_on_pubkey_and_created_at", unique: true
     t.index ["pubkey", "session"], name: "index_events_on_pubkey_and_session"
     t.index ["pubkey"], name: "index_events_on_pubkey"
     t.index ["recipient"], name: "index_events_on_recipient"
