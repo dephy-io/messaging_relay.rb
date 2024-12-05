@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 95deab7b439abba23fdc4bd659116dab5dbe2606
+  revision: 44673c80bde08f17659a709279972827ffa0ae64
   branch: main
   specs:
     actioncable (8.1.0.alpha)
@@ -292,7 +292,7 @@ GEM
       activejob (>= 7.2)
       activerecord (>= 7.2)
       railties (>= 7.2)
-    solid_queue (1.0.2)
+    solid_queue (1.1.0)
       activejob (>= 7.1)
       activerecord (>= 7.1)
       concurrent-ruby (>= 1.3.1)

@@ -9,6 +9,10 @@ class Conversation < ApplicationRecord
            dependent: :restrict_with_exception
 
   def latest_event
-    events.order(id: :desc).first
+    if latest_eid.blank?
+      nil
+    else
+      Event.find(latest_eid)
+    end
   end
 end

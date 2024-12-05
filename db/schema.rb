@@ -17,9 +17,10 @@ ActiveRecord::Schema[8.1].define(version: 2024_03_25_200103) do
   create_table "conversations", primary_key: ["pubkey", "session"], force: :cascade do |t|
     t.string "pubkey", null: false
     t.string "session", null: false
-    t.integer "lock_version"
-    t.datetime "latest_event_created_at"
     t.integer "events_count"
+    t.string "latest_eid"
+    t.datetime "latest_event_created_at"
+    t.integer "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

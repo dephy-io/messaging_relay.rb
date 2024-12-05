@@ -11,16 +11,16 @@ class Event < ApplicationRecord
   belongs_to :conversation, foreign_key: %i[pubkey session], required: true, autosave: true
   has_one :merkle_node, dependent: :restrict_with_exception
 
-  after_create :add_to_merkle_tree
-
   # A publisher must not send events in the same time which makes harder to sort them.
   validates :created_at,
-            presence: true,
+            presence: true
+  validates :created_at,
             comparison: {
               greater_than_or_equal_to: ->(current) {
                 current.conversation&.latest_event_created_at || 0
               }
-            }
+            },
+            if: :new_record?
 
   validates :session,
             presence: true,
@@ -36,6 +36,15 @@ class Event < ApplicationRecord
             format: { with: /\A\h+\z/ },
             allow_nil: true
 
+  validate if: :new_record? do
+    prev_id = tags.find { |tag| tag[0] == "prev_id" }&.[](1)
+    next if prev_id.blank?
+
+    if self.connection.latest_eid != prev_id
+      errors.add :prev_id, :invalid
+    end
+  end
+
   before_validation on: :create do
     self.session = tags.find { |tag| tag[0] == "s" }&.[](1)
     self.topic = tags.find { |tag| tag[0] == "t" }&.[](1)
@@ -48,9 +57,12 @@ class Event < ApplicationRecord
   end
 
   after_validation on: :create do
+    self.conversation.latest_eid = eid
     self.conversation.latest_event_created_at = created_at
     self.conversation.events_count += 1
   end
+
+  after_create :add_to_merkle_tree
 
   def merkle_tree_hash
     Digest::Keccak256.digest([pubkey, topic, session].join)
