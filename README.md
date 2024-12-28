@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Ruby 3.3.6
+- Ruby 3.4.1
 - PostgreSQL
 
 ## Prepare
