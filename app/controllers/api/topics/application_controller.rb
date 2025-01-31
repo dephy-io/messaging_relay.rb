@@ -10,8 +10,7 @@ module Api
       def set_topic
         if params[:topic_id].blank?
           render json: {
-            status: "error",
-            error: "Topic not found"
+            status: ErrorConstants::TOPIC_NOT_FOUND
           }, status: :not_found
         end
 

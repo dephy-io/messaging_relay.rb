@@ -4,7 +4,7 @@ module Api
   class HomeController < Api::ApplicationController
     def index
       render json: {
-        status: "ok"
+        status: ErrorConstants::OK
       }
     end
   end

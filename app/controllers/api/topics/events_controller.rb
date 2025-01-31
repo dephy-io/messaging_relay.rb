@@ -9,7 +9,7 @@ module Api::Topics
       )
 
       render json: {
-        status: "ok",
+        status: ErrorConstants::OK,
         events: @records.map(&:nip1_hash),
         pagination: {
           has_more: @pagy.has_more?
@@ -21,7 +21,7 @@ module Api::Topics
       @event = Event.of_topic(@topic).order(id: :desc).first
 
       render json: {
-        status: "ok",
+        status: ErrorConstants::OK,
         event: @event&.nip1_hash
       }
     end

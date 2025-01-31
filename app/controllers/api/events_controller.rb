@@ -6,9 +6,9 @@ module Api
       @event = Event.find_by!(eid: params[:id])
 
       render json: {
-        status: "ok",
+        status: ErrorConstants::OK,
         event: @event.nip1_hash,
-        extra: {
+        metadata: {
           topic: @event.topic,
           session: @event.session,
           latest: {
@@ -21,10 +21,7 @@ module Api
       }
     rescue ActiveRecord::RecordNotFound => _ex
       render json: {
-        status: "error",
-        error: {
-          message: "Event not found"
-        }
+        status: ErrorConstants::EVENT_NOT_FOUND
       }, status: :not_found
     end
 
@@ -32,25 +29,20 @@ module Api
       @event = Event.from_raw params.require(:event)
       if @event.save
         render json: {
-          status: "ok",
+          status: ErrorConstants::OK,
           event: @event.nip1_hash
         }
       else
         render json: {
-          status: "error",
+          status: ErrorConstants::BAD_EVENT,
           error: {
-            message: "Event not saved",
             data: @event.errors.full_messages
           }
         }, status: :unprocessable_content
       end
     rescue ActiveRecord::StaleObjectError
       render json: {
-        status: "error",
-        error: {
-          message: "Event not saved",
-          data: "Too fast requests."
-        }
+        status: ErrorConstants::POST_TOO_FAST
       }, status: :unprocessable_content
     end
 
@@ -73,8 +65,8 @@ module Api
       end
 
       render json: {
-        status: "ok",
-        returns: returns.map(&:nip1_hash),
+        status: ErrorConstants::OK,
+        saved: returns.map(&:nip1_hash),
         errored: errored
       }
     end

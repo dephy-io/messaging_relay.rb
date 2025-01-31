@@ -10,8 +10,7 @@ module Api
       def set_recipient
         if params[:recipient_id].blank?
           render json: {
-            status: "error",
-            error: "Recipient not found"
+            status: ErrorConstants::RECIPIENT_NOT_FOUND
           }, status: :not_found
         end
 
