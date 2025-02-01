@@ -50,9 +50,11 @@ class Event < ApplicationRecord
     self.topic = tags.find { |tag| tag[0] == "t" }&.[](1)
     self.recipient = tags.find { |tag| tag[0] == "p" }&.[](1)
 
-    self.conversation ||= Conversation.find_or_create_by(pubkey: pubkey, session: session) do |c|
-      c.latest_event_created_at = created_at
-      c.events_count = 0
+    if session
+      self.conversation ||= Conversation.find_or_create_by(pubkey: pubkey, session: session) do |c|
+        c.latest_event_created_at = created_at
+        c.events_count = 0
+      end
     end
   end
 
