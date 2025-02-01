@@ -8,6 +8,9 @@ class Conversation < ApplicationRecord
            foreign_key: %i[pubkey session],
            dependent: :restrict_with_exception
 
+  validates :pubkey, :session,
+            presence: true
+
   def latest_event
     if latest_eid.blank?
       nil
