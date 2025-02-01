@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :events, only: %i[show create] do
+    resources :events, only: %i[index show create] do
       collection do
         post "batch", to: "events#batch_create"
       end

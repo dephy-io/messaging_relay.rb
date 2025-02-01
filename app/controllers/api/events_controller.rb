@@ -2,6 +2,21 @@
 
 module Api
   class EventsController < ::Api::ApplicationController
+    def index
+      @pagy, @records = pagy_uuid_cursor(
+        Event.all,
+        after: params[:after], primary_key: :eid, order: { id: :asc }
+      )
+
+      render json: {
+        status: ErrorConstants::OK,
+        events: @records.map(&:nip1_hash),
+        pagination: {
+          has_more: @pagy.has_more?
+        }
+      }
+    end
+
     def show
       @event = Event.find_by!(eid: params[:id])
 
